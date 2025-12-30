@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+varxmlhttp;
+var Quotes;
+function loadJSON()
+{
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = HandleData;
+xmlhttp.open("GET","http://localhost/html5/json/data/quotes.txt", true);
+xmlhttp.send();
+
+}
+function HandleData()
+{
+alert("Loaded the Data");
+   if (xmlhttp.readyState==4 &&xmlhttp.status==200)
+   {
+    Quotes = eval('(' + xmlhttp.responseText +')');
+    InitButtons();
+   }
+}
+function InitButtons()
+{
+   var i;
+   var currentHTML;
+   for (i = 0; i<Quotes.Messages.length; i++)
+   {
+    currentHTML = document.getElementById("thePage").
+    innerHTML;document.getElementById("thePage").
+    innerHTML = currentHTML +
+     "<button onclick='ShowQuote(" + i +
+     ")'>" + Quotes.Messages[i].Name + "</button>";
+   }
+}
+function ShowQuote(i)
+{
+   alert("Person: " + Quotes.Messages[i].Name + "
+   Quote: " + Quotes.Messages[i].Quote);
+}
+</script>
+</head>
+<body id="thePage" onload="loadJSON();">
+</body>
+</html>

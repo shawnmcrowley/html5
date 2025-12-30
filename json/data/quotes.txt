@@ -1,0 +1,7 @@
+{ Messages : [ { "Name" : "Lincoln", "Quote" :"In
+the end, it's not the years in your life that
+count. It's the life in your years." },
+   { "Name" : "Gandhi", "Quote" :"You must be the
+change you wish to see in the world."
+}]
+}

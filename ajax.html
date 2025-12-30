@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var xmlhttp;
+function AJAXDemo()
+{
+   xmlhttp = new XMLHttpRequest();
+   xmlhttp.onreadystatechange = HandleData;
+   xmlhttp.open("GET","../php/get_time.php", true);
+   xmlhttp.send();
+}
+function HandleData()
+{
+   if (xmlhttp.readyState==4 && xmlhttp.status==200)
+     {
+      alert(xmlhttp.responseText);
+     }
+}
+</script>
+</head>
+<body onload="AJAXDemo();">
+</body>
+</html>

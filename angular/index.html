@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="store">
+<head>
+<link rel="stylesheet" type="text/css" href="./style.css"/>
+<link rel="stylesheet" type="text/css" href="../js/libraries/bootstrap-3.3.7/css/bootstrap.min.css"/>
+<script type="text/javascript" src="../js/libraries/angular/angular-1.5.6/angular.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<title>Single Page Application(SPA) Using Angular</title>
+</head>
+<body ng-controller="StoreController as store">
+    <!--Product Container -->
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="product in store.products | orderBy:'-price'">
+        <h3> {{product.name}}
+        <em class="pull-right">{{product.price | currency}}</em>
+         </h3>
+        <em>{{product.description}}</em>
+        <p>
+        <img height="75" width="75" ng-src="{{product.images[0].full}}"/>
+        <p>
+        <button ng-show="product.canPurchase">Add to Cart</button>
+    
+        <!--Navigation Tabs and Display Panels -->   
+         <section ng-controller="PanelController as panel">
+        <ul class="nav nav-pills">
+            <li ng-class="{active:panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Description</a></li>
+            <li ng-class="{active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Specification</a></li>
+            <li ng-class="{active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Reviews</a></li>         
+        </ul>      
+        <div class="panel" ng-show="panel.isSelected(1)">
+             <h4>Description</h4>
+            <p>{{product.description}}</p>
+        </div>
+        <div class="panel" ng-show="panel.isSelected(2)">
+            <h4>Specifications</h4>
+            <blockquote>None Yet</blockquote>
+        </div>
+        <div class="panel" ng-show="panel.isSelected(3)">
+           <!-- Reviews Form -Live Display and ReviewController Submission--> 
+           <!-- 7/13/2017 - Added Form Validation in ng-submit and css sytles for user hints -->
+            <h4>Reviews:</h4>
+                <blockquote ng-repeat="review in product.reviews">
+                <b>Stars: {{review.stars}}</b>
+                {{review.body}}
+                <cite>by: {{review.author}}</cite>
+               </blockquote>
+            <h4>Submit a Review:</h4>
+            <form name="reviewForm" ng-controller="ReviewController as reviewCTRL"
+                  ng-submit="reviewForm.$valid && reviewCTRL.addReview(product)" novalidate class="ng-dirty ng-valid ng-invalid">   
+                <blockquote>
+                <b>Stars: {{reviewCTRL.review.stars}}</b>
+                {{reviewCTRL.review.body}}
+                <cite>by: {{reviewCTRL.review.author}}</cite>
+               </blockquote>
+                <label>Rating by Stars:</label><br>
+                <select ng-model="reviewCTRL.review.stars" required>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1" selected>1 Stars</option>
+            </select>
+                <br>
+                <label>Comments: </label><br>
+                <textarea ng-model="reviewCTRL.review.body" require></textarea>
+                <br>
+                <label>By:</label><br>
+                <input ng-model="reviewCTRL.review.author" type="email" required/>
+                <br>
+                <input type="submit" value="Submit Review" />
+            </form>
+        </div>
+         </section>     
+        </div>
+    </div>
+   </body>
+</html>

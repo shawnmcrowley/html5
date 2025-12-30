@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function DisplaySupport()
+{
+  if (navigator.geolocation)
+    alert("Geolocation supported");
+  else
+    alert("No geolocation support");
+}
+
+function ShowPosition()
+{
+  if (navigator.geolocation)
+    navigator.geolocation.getCurrentPosition(DisplayResult, DisplayError)
+  else
+    alert("Browser does not support geolocation");
+}
+ function DisplayResult(Position)
+ {
+  var message = "Latitude: " + Position.coords.latitude;
+  message += "Longitude: " + Position.coords.longitude;
+  message += " Accuracy: " + Position.coords.accuracy + " meters";
+  alert(message);
+ }
+ function DisplayError(Error)
+ {
+  var message;
+  switch(Error.code) {
+    case 0: message = "Error retrieving location information";
+      break;
+    case 1: message = "User prevented location access";
+      break;
+    case 2: message = "Browser could not retrieve data";
+      break;
+    case 3: message = "Browser timed out during data retrieval";
+      break;
+ }
+ alert(message);
+}
+</script>
+</head>
+<body onload="ShowPosition()">
+</body>
+<html>

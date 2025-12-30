@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var
+   WebSite = { "Name" : "Head of the Class",
+    "URL" : "http://www.theHeadoftheclass.com" };
+function InitButton()
+{
+   document.getElementById("WebButton").innerHTML =
+   WebSite.Name;
+}
+function OpenSite()
+{
+   window.open(WebSite.URL);
+}
+</script>
+</head>
+<body onload="InitButton()">
+<button id="WebButton" onclick="OpenSite()">
+</button>
+</body>
+</html>

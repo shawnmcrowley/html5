@@ -1,0 +1,8 @@
+ <h3> {{product.name}}
+        <em class="pull-right">{{product.price | currency}}</em>
+         </h3>
+        <em>{{product.description}}</em>
+        <p>
+        <img height="75" width="75" ng-src="{{product.images[0].full}}"/>
+        <p>
+        <button ng-show="product.canPurchase">Add to Cart</button>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpirjDLvA5Jpfrpx8J1mWBpwpOJC3NasI" async defer></script>
+<script>
+var map;
+var google_api_key="AIzaSyBpirjDLvA5Jpfrpx8J1mWBpwpOJC3NasI"
+
+function DisplayMap() {
+
+if (navigator.geolocation)
+    navigator.geolocation.getCurrentPosition(DisplayResult, DisplayError)
+  else
+  alert("Browser does not support geolocation");
+}
+
+
+function DisplayResult(position)
+{
+var geocoder;
+geocoder = new google.maps.Geocoder();
+var mapOptions = { zoom: 8,mapTypeId: google.maps.MapTypeId.ROADMAP,streetViewControl:true}
+map = new google.maps.Map(document.getElementById("mapLocation"), mapOptions);
+//var address = "1600 Pennsylvania Ave, Washington, D.C.";
+var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+geocoder.geocode( { 'latLng': latlng },ResultsCallBack);
+}
+
+function ResultsCallBack (results, status)
+{
+  if (status == google.maps.GeocoderStatus.OK)
+    {
+    map.setCenter(results[0].geometry.location);
+    var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location});
+    }
+  else
+    alert("Geocode was not successful:"+ status);
+}
+function DisplayError(Error)
+ {
+  var message;
+  switch(Error.code) {
+    case 0: message = "Error retrieving locationinformation";
+      break;
+    case 1: message = "User prevented location access";
+      break;
+    case 2: message = "Browser could notretrieve data";
+      break;
+    case 3: message = "Browser timed out during data retrieval";
+      break;
+ }
+ alert(Message);
+}
+</script>
+</head>
+<body onload="DisplayMap()">
+<div id="mapLocation" style="width: 640px; height:
+480px;"></div>
+</body>
+</html>
