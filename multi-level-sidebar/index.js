@@ -22,18 +22,10 @@ import {
   ExternalLink,
 } from "lucide-react"
 
-// Define a unified menu item type that can handle any level of nesting
-interface MenuItem {
-  title: string
-  icon?: React.ElementType
-  url?: string
-  type?: "link" | "category" | "action"
-  isActive?: boolean
-  children?: MenuItem[]
-}
+// TypeScript interface removed
 
 // Unified menu data structure with recursive nesting
-const menuItems: MenuItem[] = [
+const menuItems = [
   {
     title: "Home",
     icon: Home,
@@ -318,19 +310,19 @@ const menuItems: MenuItem[] = [
 ]
 
 export function MultiLevelSidebar() {
-  const [activeModule, setActiveModule] = React.useState<MenuItem | null>(null)
+  const [activeModule, setActiveModule] = React.useState(null)
   const [isAllModulesOpen, setIsAllModulesOpen] = React.useState(false)
   const [isSecondSidebarOpen, setIsSecondSidebarOpen] = React.useState(false)
   // Track open accordion sections
-  const [openAccordions, setOpenAccordions] = React.useState<Record<string, boolean>>({
+  const [openAccordions, setOpenAccordions] = React.useState({
     // Set some accordions to be open by default
     "Sales & Purchase.PAGES": true,
     "Sales & Purchase.ACTIONS": true,
   })
 
   // Create refs for both sidebars
-  const firstSidebarRef = React.useRef<HTMLDivElement>(null)
-  const secondSidebarRef = React.useRef<HTMLDivElement>(null)
+  const firstSidebarRef = React.useRef(null)
+  const secondSidebarRef = React.useRef(null)
 
   // Function to handle clicking on the "ALL MODULES" button
   const handleAllModulesClick = () => {
@@ -342,7 +334,7 @@ export function MultiLevelSidebar() {
   }
 
   // Function to handle hovering over a module with children
-  const handleModuleHover = (module: MenuItem) => {
+  const handleModuleHover = (module) => {
     if (module.children && module.children.length > 0) {
       setActiveModule(module)
       setIsSecondSidebarOpen(true)
@@ -357,7 +349,7 @@ export function MultiLevelSidebar() {
   }
 
   // Function to toggle accordion state
-  const toggleAccordion = (title: string) => {
+  const toggleAccordion = (title) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [title]: !prev[title],
@@ -366,7 +358,7 @@ export function MultiLevelSidebar() {
 
   // Use a single event handler for mouse movement
   React.useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e) => {
       if (!isAllModulesOpen || !activeModule) return
 
       // Get the bounding rectangles of both sidebars
@@ -404,7 +396,7 @@ export function MultiLevelSidebar() {
   }, [isAllModulesOpen, activeModule])
 
   // Recursive function to render menu items with accordion support
-  const renderMenuItem = (item: MenuItem, depth = 0, path = "") => {
+  const renderMenuItem = (item, depth = 0, path = "") => {
     const itemPath = path ? `${path}.${item.title}` : item.title
 
     // For action items
